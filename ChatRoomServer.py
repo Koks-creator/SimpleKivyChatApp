@@ -31,7 +31,7 @@ def receive_message(client_socket):
         return False
 
 while True:
-    read_sockets, _, exception_sockets = select.select(sockets_list, [], sockets_list)#rzecz z ktorej czytamy, rzecz do ktorej zaposujemy, rzecz ktora moze sie zjebac
+    read_sockets, _, exception_sockets = select.select(sockets_list, [], sockets_list)#rzecz z ktorej czytamy, rzecz do ktorej zapisujemy, rzecz ktora moze sie zepsuc
 
     for notified_socket in read_sockets:#If the notified socket is our server socket, then this means we just got a new connection, which we want to handle for.
         if notified_socket == server_socket:#czy sie ktos polaczyl
