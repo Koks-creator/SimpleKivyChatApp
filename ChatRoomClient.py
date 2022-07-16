@@ -10,7 +10,7 @@ import sys
 import socket
 import errno
 from kivy.clock import Clock
-from BazyDanych.UsersDataBase import write_to_db, rows
+from UsersDataBase import write_to_db, rows
 from kivy.core.window import Window
 
 HEADER_LENGTH = 10
