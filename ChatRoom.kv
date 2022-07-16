@@ -1,0 +1,491 @@
+<ScreensManager>:
+    id: screen_management
+
+
+    LoginWindow:
+        id: login
+        name: 'login'
+        manager: screen_management
+
+    ChatWindow:
+        dummy_v:login.dummy
+        id: chat
+        name: 'chat'
+        #image_v:login.image
+        login:login
+        manager: screen_management
+
+    RegisterWindow:
+        id: register
+        name: 'register'
+        manager: screen_management
+
+<RegisterWindow>:
+    name: "register"
+    username_reg:username_reg
+    email_reg: email_reg
+    password_reg: password_reg
+
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "tlo2.jpg"
+
+
+    FloatLayout:
+
+        cols:1
+        size: root.width, root.height
+
+        Label:
+            bold: True
+            text: "Chat App Kurla"
+            size_hint: .5, .5
+            pos_hint: {"x": .25, "top":1.15}
+            font_size: 55
+
+        Label:
+            text_size:self.size
+            text: "Username: "
+            size_hint: .2, .2
+            pos_hint: {"x": .2, "top":.8}
+            font_size: 33
+            halign:"left"
+            valign:"middle"
+
+        TextInput:
+            opacity: .7
+            id: username_reg
+            size_hint: .4, .1
+            pos_hint: {"x": .4, "top":.75}
+            font_size: 35
+            on_text_validate: root.on_enter_text_input()
+            multiline: False
+
+        Label:
+            text_size:self.size
+            text: "Email: "
+            size_hint: .2, .2
+            pos_hint: {"x": .2, "top":.65}
+            font_size: 35
+            halign:"left"
+            valign:"middle"
+
+        TextInput:
+
+            opacity: .7
+            id: email_reg
+            size_hint: .4, .1
+            pos_hint: {"x": .4, "top":.6}
+            font_size: 33
+            multiline: False
+            on_text_validate: root.on_enter_text_input2()
+
+        Label:
+            text_size:self.size
+            text: "Password: "
+            size_hint: .2, .2
+            pos_hint: {"x": .2, "top":.5}
+            font_size: 34
+            halign:"left"
+            valign:"middle"
+
+        TextInput:
+            password: True
+            opacity: .7
+            id: password_reg
+            size_hint: .4, .1
+            pos_hint: {"x": .4, "top":.45}
+            font_size: 35
+            multiline: False
+
+        Button:
+            id: submit
+
+            background_color: 0, 0, 0, .5
+            text:"Submit"
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":.2, "top":.3}
+            font_size: 25
+            on_release:
+                root.save_user()
+                root.manager.transition.direction = "left"
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height
+
+        Button:
+            background_color: 0, 0, 0, .5
+            text:"Do you already have an account? Log in!"
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":.2, "top":.15}
+            font_size: 25
+            on_release:
+                app.root.current = "login"
+                root.manager.transition.direction = "left"
+
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height
+
+
+
+
+<LoginWindow>:
+
+    name:"login"
+    login_log: login_log
+    password_log: password_log
+
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "tlo2.jpg"
+
+    FloatLayout:
+
+        cols:1
+        size: root.width, root.height
+
+        Label:
+            bold: True
+            text: "Log in"
+            font_size: 55
+            size_hint: 0.6, 0.2
+            pos_hint: {"x":.2, "top":1}
+
+        Label:
+            text: "Username:"
+            font_size: 45
+            size_hint: 0.6, 0.2
+            pos_hint: {"x":.2, "top":.84}
+
+        TextInput:
+            opacity: .7
+
+            id: login_log
+            multiline: False
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":0.2, "top":0.67}
+            font_size: 45
+            on_text_validate: password_log.focus = True
+
+        Label:
+            text: "Password:"
+            font_size: 45
+            size_hint: 0.6, 0.2
+            pos_hint: {"x":.2, "top":.61}
+
+        TextInput:
+            opacity: .7
+            password: True
+            id: password_log
+            multiline: False
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":0.2, "top":0.44}
+            font_size: 45
+            on_text_validate:
+                login_btn.focus = True
+                login_btn.background_color = [0, 0, 1, 0.5]
+
+        Button:
+            size_hint: 0.08, 0.1
+            pos_hint: {"x":0.71, "top":0.44}
+            font_size: 25
+            background_normal:"C:/Users/Piotr/PycharmProjects/Pajton/Imydzys/eye4.png"
+            background_down:"C:/Users/Piotr/PycharmProjects/Pajton/Imydzys/eye4.png"
+            on_press:
+                password_log.password = False
+            on_release:
+                password_log.password = True
+
+        Button:
+
+            id: login_btn
+            focus: False
+            background_color: 0, 0, 0, .5
+            text:"Log in"
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":.2, "top":.30}
+            font_size: 25
+            on_release:
+                root.login()
+                root.manager.transition.direction = "left"
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height
+
+        Button:
+            background_color: 0, 0, 0, .5
+            text:"No account yet? Create one here!"
+            size_hint: 0.6, 0.1
+            pos_hint: {"x":.2, "top":.16}
+            font_size: 25
+            on_release:
+                app.root.current = "register"
+                root.manager.transition.direction = "right"
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height
+
+
+<ChatWindow>:
+    join_btn:join_btn
+    name:"chat"
+    text_msg:text_msg
+    chat_input:chat_input
+    send_button:send_button
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "tlo2.jpg"
+
+
+    ScrollView:
+        id: scrlv
+        do_scroll_x: False
+        do_scroll_y: True
+        TextInput:
+            id: chat_input
+            foreground_color: (1,0,1,1)
+            background_color: (0,0,0,.6)
+            disabled: True
+            multiline: True
+            text: root.msg_chat
+            size_hint: .5, None
+            font_size: 25
+            color: (0,1,0,1)
+            height: max(self.minimum_height, scrlv.height)
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                Line:
+                    width: 1
+                    rectangle: self.x, self.y, self.width, self.height
+
+
+    Button:
+
+        background_color: 0, 0, 0, .5
+        text:"log out"
+        size_hint: 0.5, 0.1
+        pos_hint: {"x":.5, "top":.999}
+        font_size: 25
+        disabled: False
+        on_release:
+            root.logout()
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+    Button:
+        id: join_btn
+        background_color: 0, 0, 0, .5
+        text:"Join"
+        size_hint: 0.5, 0.1
+        pos_hint: {"x":.5, "top":.4}
+        font_size: 25
+        disabled: False
+        on_release:
+            root.join2()
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+    TextInput:
+
+        id: text_msg
+        opacity: .8
+        disabled: True
+        background_color: (0,0,0,.6)
+        foreground_color: (1,1,1,1)
+        font_size: 35
+        multiline: True
+        size_hint: .5, .1
+        pos_hint: {"x":.5, "top":.3}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+    Button:
+        id:send_button
+        background_color: 0, 0, 0, .5
+        text: "Send"
+        font_size: 35
+        size_hint: .5, .2
+        pos_hint: {"x":.5, "top":.2}
+        on_release:
+            root.start_sending()
+        disabled: True if len(text_msg.text) == 0 else False
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpConnection>:
+    Label:
+        text:"Check your internet connection."
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpLogin>:
+    Label:
+        text:"Login and password inputs cannot be empty!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpLogin2>:
+    Label:
+        text:"Username or password is incorrect!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpRegister1>:
+    Label:
+        text:"Inputs cannot be empty!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpRegister3>:
+    Label:
+        text:"Password must containt at least 8 characters!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpRegister4>:
+    Label:
+        text:"Username or email is already taken!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
+<PopUpRegister5>:
+    Label:
+        text:"Email is invalid!"
+        size_hint: 0.6, 0.2
+        pos_hint:{"x": 0.2, "top": 0.9}
+
+
+    Button:
+        background_color: 0, 0, 0, .5
+        text:"Close"
+        on_release:root.close()
+        size_hint: 0.8, 0.2
+        pos_hint:{"x": 0.1, "y": 0.1}
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                width: 1
+                rectangle: self.x, self.y, self.width, self.height
+
